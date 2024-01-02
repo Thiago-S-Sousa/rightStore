@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
+import { CreateUserDTO } from './dto/create-user.dto';
 import { UserRepository } from './user-repository/user-repository';
 
 @Controller('user')
@@ -8,7 +9,7 @@ export class UserController {
   constructor(private userRepository: UserRepository) {}
 
   @Post()
-  async CreateUser(@Body() userData: any) {
+  async CreateUser(@Body() userData: CreateUserDTO) {
     this.userRepository.save(userData);
 
     return userData;

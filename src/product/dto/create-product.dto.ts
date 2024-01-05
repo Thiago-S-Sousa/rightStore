@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsUUID } from 'class-validator';
 
 import { ProductFeaturesDTO } from './product-features.dto';
 import { ProductImageDTO } from './product-image.dto';
 
 export class CreateProductDTO {
+  @IsUUID(undefined, { message: 'ID de usuário inválido' })
+  userId: string;
+
   @IsNotEmpty({ message: 'O nome não deve ser vazio' })
   name: string;
 

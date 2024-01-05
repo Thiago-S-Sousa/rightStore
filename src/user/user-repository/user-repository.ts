@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-
 import { Injectable } from '@nestjs/common';
+
+import { UserEntity } from '../user.entity';
 
 /* Classe Responsável por guardar dados dos novos usuários(users) e lista-los. */
 
@@ -8,9 +9,9 @@ import { Injectable } from '@nestjs/common';
 
 /* @Injectbale - Decorator responsável por tornar a classe injetável */
 export class UserRepository {
-  private users = [];
+  private users: UserEntity[] = [];
 
-  async save(user: any) {
+  async save(user: UserEntity) {
     this.users.push(user);
   }
 

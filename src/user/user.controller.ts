@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
 
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UserRepository } from './user-repository/user-repository';
+import { UserEntity } from './user.entity';
 
 @Controller('user')
 export class UserController {
@@ -10,9 +12,15 @@ export class UserController {
 
   @Post()
   async CreateUser(@Body() userData: CreateUserDTO) {
-    this.userRepository.save(userData);
+    const userEntity = new UserEntity();
+    userEntity.email = userData.email;
+    userEntity.name = userData.name;
+    userEntity.password = userData.password;
+    userEntity.id = uuid();
 
-    return userData;
+    this.userRepository.save(userEntity);
+
+    return { id: userEntity.id, message: 'Usuário criado com sucesso' };
   }
 
   /* @Body() - Decorator responsável por guardar dados inseridos no corpo da requisição. */

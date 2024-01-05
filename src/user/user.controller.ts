@@ -3,6 +3,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
 import { CreateUserDTO } from './dto/create-user.dto';
+import { ListUserDTO } from './dto/list-user.dto';
 import { UserRepository } from './user-repository/user-repository';
 import { UserEntity } from './user.entity';
 
@@ -20,7 +21,10 @@ export class UserController {
 
     this.userRepository.save(userEntity);
 
-    return { id: userEntity.id, message: 'Usuário criado com sucesso' };
+    return {
+      user: new ListUserDTO(userEntity.id, userEntity.name),
+      message: 'Usuário criado com sucesso',
+    };
   }
 
   /* @Body() - Decorator responsável por guardar dados inseridos no corpo da requisição. */
@@ -28,6 +32,12 @@ export class UserController {
 
   @Get()
   async ListUser() {
-    return this.userRepository.list();
+    const savedUsers = await this.userRepository.list();
+
+    const listUser = savedUsers.map(
+      (user) => new ListUserDTO(user.id, user.name),
+    );
+
+    return listUser;
   }
 }

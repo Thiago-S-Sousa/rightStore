@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
 import { CreateUserDTO } from './dto/create-user.dto';
 import { ListUserDTO } from './dto/list-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserRepository } from './user-repository/user-repository';
 import { UserEntity } from './user.entity';
 
@@ -39,5 +41,15 @@ export class UserController {
     );
 
     return listUser;
+  }
+
+  @Put('/:id')
+  async updateUser(@Param('id') id: string, @Body() newData: UpdateUserDTO) {
+    const updatedUser = await this.userRepository.upadate(id, newData);
+
+    return {
+      user: updatedUser,
+      message: 'Usuário atualizado com sucesso',
+    };
   }
 }

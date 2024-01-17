@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
 import { CreateUserDTO } from './dto/create-user.dto';
@@ -50,6 +58,16 @@ export class UserController {
     return {
       user: updatedUser,
       message: 'Usuário atualizado com sucesso',
+    };
+  }
+
+  @Delete('/:id')
+  async removeUser(@Param('id') id: string) {
+    const userRemoved = await this.userRepository.remove(id);
+
+    return {
+      user: userRemoved,
+      message: 'Usuário removido com sucesso',
     };
   }
 }

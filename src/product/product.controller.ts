@@ -12,12 +12,12 @@ import { randomUUID } from 'crypto';
 
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
-import { ProductRepository } from './product-repository/product-repository';
 import { ProductEntity } from './product.entity';
+import { ProductService } from './product.service';
 
 @Controller('product')
 export class ProductController {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(private readonly productService: ProductService) {}
 
   @Post()
   async createNewProduct(@Body() productData: CreateProductDTO) {
@@ -33,19 +33,22 @@ export class ProductController {
     product.characteristics = productData.characteristics;
     product.images = productData.images;
 
-    const registeredProduct = this.productRepository.save(product);
+    const registeredProduct = this.productService.createProduct(product);
 
     return registeredProduct;
   }
 
   @Get()
   async listAllProducts() {
-    return this.productRepository.listAll();
+    return this.productService.listProducts();
   }
 
   @Put('/:id')
   async update(@Param('id') id: string, @Body() productData: UpdateProductDTO) {
-    const productChanged = await this.productRepository.update(id, productData);
+    const productChanged = await this.productService.updateProducts(
+      id,
+      productData,
+    );
 
     return {
       message: 'produto atualizado com sucesso',
@@ -55,7 +58,7 @@ export class ProductController {
 
   @Delete('/:id')
   async remove(@Param('id') id: string) {
-    const productRemoved = await this.productRepository.remove(id);
+    const productRemoved = await this.productService.deleteProducts(id);
 
     return {
       message: 'produto removido com sucesso',

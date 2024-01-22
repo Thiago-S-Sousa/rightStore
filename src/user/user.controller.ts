@@ -14,12 +14,12 @@ import { v4 as uuid } from 'uuid';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { ListUserDTO } from './dto/list-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
-import { UserRepository } from './user-repository/user-repository';
 import { UserEntity } from './user.entity';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userService: UserService) {}
 
   @Post()
   async CreateUser(@Body() userData: CreateUserDTO) {
@@ -29,7 +29,7 @@ export class UserController {
     userEntity.password = userData.password;
     userEntity.id = uuid();
 
-    this.userRepository.save(userEntity);
+    this.userService.createUsers(userEntity);
 
     return {
       user: new ListUserDTO(userEntity.id, userEntity.name),
@@ -42,18 +42,14 @@ export class UserController {
 
   @Get()
   async ListUser() {
-    const savedUsers = await this.userRepository.list();
+    const savedUsers = await this.userService.listUsers();
 
-    const listUser = savedUsers.map(
-      (user) => new ListUserDTO(user.id, user.name),
-    );
-
-    return listUser;
+    return savedUsers;
   }
 
   @Put('/:id')
   async updateUser(@Param('id') id: string, @Body() newData: UpdateUserDTO) {
-    const updatedUser = await this.userRepository.upadate(id, newData);
+    const updatedUser = await this.userService.updateUsers(id, newData);
 
     return {
       user: updatedUser,
@@ -63,7 +59,7 @@ export class UserController {
 
   @Delete('/:id')
   async removeUser(@Param('id') id: string) {
-    const userRemoved = await this.userRepository.remove(id);
+    const userRemoved = await this.userService.deleteUsers(id);
 
     return {
       user: userRemoved,

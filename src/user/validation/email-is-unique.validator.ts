@@ -1,26 +1,27 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from './../user-repository/user-repository';
-
 import {
+  registerDecorator,
   ValidationArguments,
   ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  registerDecorator,
 } from 'class-validator';
+
+import { UserService } from './../user.service';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class EmailIsUniqueValidator implements ValidatorConstraintInterface {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userService: UserService) {}
 
   async validate(
     value: any,
     validationArguments?: ValidationArguments,
   ): Promise<boolean> {
-    const userEmailExists = await this.userRepository.emailExists(value);
+    const userEmailExists = await this.userService.emailExists(value);
     return !userEmailExists;
   }
 }

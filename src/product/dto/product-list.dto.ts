@@ -1,22 +1,24 @@
 /* eslint-disable prettier/prettier */
-class ProductFeatureListDTO {
+
+class ListProductCharacteristicDTO {
   name: string;
   description: string;
 }
 
-class ProductImageListDTO {
+class ListProductImageDTO {
   url: string;
   description: string;
 }
 
 export class ProductListDTO {
-  id: string;
-  userId: string;
-  name: string;
-  value: number;
-  amount: number;
-  description: string;
-  category: string;
-  characteristics: ProductFeatureListDTO[];
-  images: ProductImageListDTO[];
+  constructor(
+    private readonly id: string,
+    private readonly name: string,
+    private readonly value: number,
+    private readonly amount: number,
+    private readonly description: string,
+    private readonly characteristics: ListProductCharacteristicDTO[],
+    private readonly images: ListProductImageDTO[],
+    private readonly category: string,
+  ) {}
 }

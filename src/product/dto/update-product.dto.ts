@@ -12,8 +12,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-import { ProductFeaturesDTO } from './product-features.dto';
-import { ProductImageDTO } from './product-image.dto';
+import {
+  ProductCharacteristicDTO,
+  ProductImageDTO,
+} from './create-product.dto';
 
 export class UpdateProductDTO {
   @IsUUID(undefined, { message: 'ID do produto inválido' })
@@ -36,7 +38,7 @@ export class UpdateProductDTO {
   @IsNumber()
   @Min(0, { message: 'Quantidade mínima inválida' })
   @IsOptional()
-  availableQuantity: number;
+  amount: number;
 
   @IsString()
   @IsOptional()
@@ -45,9 +47,9 @@ export class UpdateProductDTO {
   @ValidateNested()
   @IsArray()
   // @ArrayMinSize(3)
-  @Type(() => ProductFeaturesDTO)
+  @Type(() => ProductCharacteristicDTO)
   @IsOptional()
-  characteristics: ProductFeaturesDTO[];
+  characteristics: ProductCharacteristicDTO[];
 
   @ValidateNested()
   @IsArray()

@@ -1,4 +1,8 @@
 /* eslint-disable prettier/prettier */
+
+// ProductRepository - Arquivo OBSOLETO e sem ultilidade na aplicação //
+// Mantido apenas para fins didáticos e de controle - DESCONSIDERAR //
+
 import { Injectable } from '@nestjs/common';
 
 import { ProductEntity } from '../product.entity';
@@ -45,3 +49,6 @@ export class ProductRepository {
     return productRemoved;
   }
 }
+
+// ProductRepository - Arquivo OBSOLETO e sem ultilidade na aplicação //
+// Mantido apenas para fins didáticos e de controle - DESCONSIDERAR //

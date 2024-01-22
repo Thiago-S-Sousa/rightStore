@@ -4,6 +4,9 @@ import { Injectable } from '@nestjs/common';
 
 import { UserEntity } from '../user.entity';
 
+// UserRepository - Arquivo OBSOLETO e sem ultilidade na aplicação //
+// Mantido apenas para fins didáticos e de controle - DESCONSIDERAR //
+
 /* Classe Responsável por guardar, listar, editar e excluir os dados dos novos usuários(users). */
 
 @Injectable()
@@ -70,3 +73,6 @@ export class UserRepository {
     return user;
   }
 }
+
+// UserRepository - Arquivo OBSOLETO e sem ultilidade na aplicação //
+// Mantido apenas para fins didáticos e de controle - DESCONSIDERAR //

@@ -8,11 +8,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { randomUUID } from 'crypto';
 
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
-import { ProductEntity } from './product.entity';
 import { ProductService } from './product.service';
 
 @Controller('product')
@@ -21,21 +19,13 @@ export class ProductController {
 
   @Post()
   async createNewProduct(@Body() productData: CreateProductDTO) {
-    const product = new ProductEntity();
+    const registeredProduct =
+      await this.productService.createProduct(productData);
 
-    product.id = randomUUID();
-    product.name = productData.name;
-    product.userId = productData.userId;
-    product.value = productData.value;
-    product.amount = productData.amount;
-    product.description = productData.description;
-    product.category = productData.category;
-    product.characteristics = productData.characteristics;
-    product.images = productData.images;
-
-    const registeredProduct = this.productService.createProduct(product);
-
-    return registeredProduct;
+    return {
+      message: 'Produto cadastrado com sucesso',
+      product: registeredProduct,
+    };
   }
 
   @Get()

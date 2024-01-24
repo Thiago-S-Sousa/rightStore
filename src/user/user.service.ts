@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { CreateUserDTO } from './dto/create-user.dto';
 import { ListUserDTO } from './dto/list-user.dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserEntity } from './user.entity';
@@ -14,8 +15,14 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async createUsers(userEntity: UserEntity) {
-    await this.userRepository.save(userEntity);
+  async createUsers(userData: CreateUserDTO) {
+    const userEntity = new UserEntity();
+
+    userEntity.email = userData.email;
+    userEntity.name = userData.name;
+    userEntity.password = userData.password;
+
+    return this.userRepository.save(userEntity);
   }
 
   async listUsers() {

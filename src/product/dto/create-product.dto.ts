@@ -56,7 +56,7 @@ export class CreateProductDTO {
 
   @IsNumber()
   @Min(0, { message: 'Quantidade mínima inválida' })
-  amount: number;
+  availableQuantity: number;
 
   @IsString()
   @IsNotEmpty({ message: 'Descrição do produto não pode ser vazia ' })

@@ -15,7 +15,7 @@ export class ProductListDTO {
     private readonly id: string,
     private readonly name: string,
     private readonly value: number,
-    private readonly amount: number,
+    private readonly availableQuantity: number,
     private readonly description: string,
     private readonly characteristics: ListProductCharacteristicDTO[],
     private readonly images: ListProductImageDTO[],

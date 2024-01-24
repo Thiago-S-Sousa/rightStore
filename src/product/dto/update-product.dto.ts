@@ -38,7 +38,7 @@ export class UpdateProductDTO {
   @IsNumber()
   @Min(0, { message: 'Quantidade mínima inválida' })
   @IsOptional()
-  amount: number;
+  availableQuantity: number;
 
   @IsString()
   @IsOptional()
